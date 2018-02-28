@@ -16,18 +16,9 @@ WARNING:
 
 # Supported tags and respective `Dockerfile` links
 
--	[`18.03.0-ce-rc1`, `18.03-rc`, `rc`, `test` (*18.03-rc/Dockerfile*)](https://github.com/docker-library/docker/blob/5d58870994d0ba33a5228af06876fe2026752924/18.03-rc/Dockerfile)
--	[`18.03.0-ce-rc1-dind`, `18.03-rc-dind`, `rc-dind`, `test-dind` (*18.03-rc/dind/Dockerfile*)](https://github.com/docker-library/docker/blob/5d58870994d0ba33a5228af06876fe2026752924/18.03-rc/dind/Dockerfile)
--	[`18.03.0-ce-rc1-git`, `18.03-rc-git`, `rc-git`, `test-git` (*18.03-rc/git/Dockerfile*)](https://github.com/docker-library/docker/blob/5d58870994d0ba33a5228af06876fe2026752924/18.03-rc/git/Dockerfile)
--	[`18.02.0-ce`, `18.02.0`, `18.02`, `18`, `edge`, `latest` (*18.02/Dockerfile*)](https://github.com/docker-library/docker/blob/157869f94ea90e2acb4d0f77045d99079ead821c/18.02/Dockerfile)
--	[`18.02.0-ce-dind`, `18.02.0-dind`, `18.02-dind`, `18-dind`, `edge-dind`, `dind` (*18.02/dind/Dockerfile*)](https://github.com/docker-library/docker/blob/157869f94ea90e2acb4d0f77045d99079ead821c/18.02/dind/Dockerfile)
--	[`18.02.0-ce-git`, `18.02.0-git`, `18.02-git`, `18-git`, `edge-git`, `git` (*18.02/git/Dockerfile*)](https://github.com/docker-library/docker/blob/157869f94ea90e2acb4d0f77045d99079ead821c/18.02/git/Dockerfile)
--	[`17.12.1-ce-rc2`, `17.12-rc` (*17.12-rc/Dockerfile*)](https://github.com/docker-library/docker/blob/9a1feddfc856278e289035da7a29fd218bc12d78/17.12-rc/Dockerfile)
--	[`17.12.1-ce-rc2-dind`, `17.12-rc-dind` (*17.12-rc/dind/Dockerfile*)](https://github.com/docker-library/docker/blob/56ff41e041f3bffbabaa9237421baa5ebe86ec74/17.12-rc/dind/Dockerfile)
--	[`17.12.1-ce-rc2-git`, `17.12-rc-git` (*17.12-rc/git/Dockerfile*)](https://github.com/docker-library/docker/blob/56ff41e041f3bffbabaa9237421baa5ebe86ec74/17.12-rc/git/Dockerfile)
--	[`17.12.0-ce`, `17.12.0`, `17.12`, `17`, `stable` (*17.12/Dockerfile*)](https://github.com/docker-library/docker/blob/b9fd686dac473fb71ffb426a9ef8e0467208dd2f/17.12/Dockerfile)
--	[`17.12.0-ce-dind`, `17.12.0-dind`, `17.12-dind`, `17-dind`, `stable-dind` (*17.12/dind/Dockerfile*)](https://github.com/docker-library/docker/blob/de9fda490429cf83734ef78b58f0ae9cfed1b087/17.12/dind/Dockerfile)
--	[`17.12.0-ce-git`, `17.12.0-git`, `17.12-git`, `17-git`, `stable-git` (*17.12/git/Dockerfile*)](https://github.com/docker-library/docker/blob/de9fda490429cf83734ef78b58f0ae9cfed1b087/17.12/git/Dockerfile)
+**No supported tags found!**
+
+It is very likely that `docker` does not support the currently selected architecture (`windows-amd64`).
 
 # Quick reference
 
@@ -80,7 +71,7 @@ If you are still convinced that you need Docker-in-Docker and not just access to
 **IMPORTANT:** this image defaults to `--storage-driver=vfs`, which will be very slow and inefficient (but is the only driver which is guaranteed to work regardless of your underlying filesystem). Which driver you should use varies depending on your needs, but a good rule of thumb is that your DinD instance should be using the same driver as your host (which can be seen under `Storage Driver` in the output of `docker info`). See the "Custom daemon flags" section below for how to specify your storage driver.
 
 ```console
-$ docker run --privileged --name some-docker -d docker:stable-dind
+$ docker run --privileged --name some-docker -d winamd64/docker:stable-dind
 ```
 
 **Note:** `--privileged` is required for Docker-in-Docker to function properly, but it should be used with care as it provides full access to the host environment, as explained [in the relevant section of the Docker documentation](https://docs.docker.com/engine/reference/run/#runtime-privilege-and-linux-capabilities).
@@ -90,7 +81,7 @@ This image includes `EXPOSE 2375` (the Docker port), so standard container linki
 ## Connect to it from a second container
 
 ```console
-$ docker run --rm --link some-docker:docker docker:edge version
+$ docker run --rm --link some-docker:docker winamd64/docker:edge version
 Client:
  Version:      17.05.0-ce
  API version:  1.27 (downgraded from 1.29)
@@ -110,7 +101,7 @@ Server:
 ```
 
 ```console
-$ docker run -it --rm --link some-docker:docker docker:edge sh
+$ docker run -it --rm --link some-docker:docker winamd64/docker:edge sh
 / # docker version
 Client:
  Version:      17.05.0-ce
@@ -131,7 +122,7 @@ Server:
 ```
 
 ```console
-$ docker run --rm --link some-docker:docker docker info
+$ docker run --rm --link some-docker:docker winamd64/docker info
 Containers: 0
  Running: 0
  Paused: 0
@@ -175,7 +166,7 @@ Live Restore Enabled: false
 ```
 
 ```console
-$ docker run --rm -v /var/run/docker.sock:/var/run/docker.sock docker version
+$ docker run --rm -v /var/run/docker.sock:/var/run/docker.sock winamd64/docker version
 Client:
  Version:      17.05.0-ce
  API version:  1.28 (downgraded from 1.29)
@@ -197,7 +188,7 @@ Server:
 ## Custom daemon flags
 
 ```console
-$ docker run --privileged --name some-overlay-docker -d docker:dind --storage-driver=overlay
+$ docker run --privileged --name some-overlay-docker -d winamd64/docker:dind --storage-driver=overlay
 ```
 
 ## Where to Store Data
@@ -213,7 +204,7 @@ The Docker documentation is a good starting point for understanding the differen
 2.	Start your `docker` container like this:
 
 	```console
-	$ docker run --privileged --name some-docker -v /my/own/var-lib-docker:/var/lib/docker -d docker:dind
+	$ docker run --privileged --name some-docker -v /my/own/var-lib-docker:/var/lib/docker -d winamd64/docker:dind
 	```
 
 The `-v /my/own/var-lib-docker:/var/lib/docker` part of the command mounts the `/my/own/var-lib-docker` directory from the underlying host system as `/var/lib/docker` inside the container, where Docker by default will write its data files.
